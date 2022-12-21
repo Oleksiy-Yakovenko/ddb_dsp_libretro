@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <deadbeef/deadbeef.h>
+#include "../../deadbeef.h"
 #include "libretro.h"
 
 // #define trace(...) { fprintf(stderr, __VA_ARGS__); }
