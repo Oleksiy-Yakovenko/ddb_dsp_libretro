@@ -1,7 +1,8 @@
 /*
-    DeaDBeeF - The Ultimate Music Player
-    Copyright (C) 2009-2013 Alexey Yakovenko <waker@users.sourceforge.net>
-    Copyright (C) 2021 Michael Lelli <toadking@toadking.com>
+   ddb_dsp_libretro resampler plugin for DeaDBeeF player
+   Copyright (C) 2021 Michael Lelli <toadking@toadking.com>
+   based on SRC resampler plugin code
+   Copyright (C) 2009-2022 Oleksiy Yakovenko <waker@users.sourceforge.net>
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -285,8 +286,28 @@ static DB_dsp_t plugin = {
             "Based on foobar2000 modifications:\n"
             "https://www.foobar2000.org/sinc-resampler",
         .copyright =
-            "Copyright (C) 2010-2018 The RetroArch team\n"
-            "Modified by Janne Hyvärinen and Peter Pawlowski\n"
+            "ddb_dsp_libretro resampler plugin for DeaDBeeF player\n"
+            "Copyright (C) 2021 Michael Lelli <toadking@toadking.com>\n"
+            "based on SRC resampler plugin code\n"
+            "Copyright (C) 2009-2022 Oleksiy Yakovenko <waker@users.sourceforge.net>\n"
+            "\n"
+            "This program is free software; you can redistribute it and/or\n"
+            "modify it under the terms of the GNU General Public License\n"
+            "as published by the Free Software Foundation; either version 2\n"
+            "of the License, or (at your option) any later version.\n"
+            "\n"
+            "This program is distributed in the hope that it will be useful,\n"
+            "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+            "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+            "GNU General Public License for more details.\n"
+            "\n"
+            "You should have received a copy of the GNU General Public License\n"
+            "along with this program; if not, write to the Free Software\n"
+            "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n"
+            "\n"
+            "\n"
+            "sinc_resampler.h\n"
+            "Copyright  (C) 2010-2018 The RetroArch team\n"
             "\n"
             "Permission is hereby granted, free of charge,\n"
             "to any person obtaining a copy of this software and associated documentation files (the \"Software\"),\n"
@@ -301,7 +322,32 @@ static DB_dsp_t plugin = {
             "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n"
             "IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,\n"
             "WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
-            "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+            "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n"
+            "\n"
+            "\n"
+            "Modified by Janne Hyvärinen\n"
+            "Modified some more by Peter Pawlowski\n"
+            "\n"
+            "\n"
+            "\n"
+            "ppsimd\n"
+            "Copyright (C) 2002-2021 Peter Pawlowski\n"
+            "\n"
+            "This software is provided 'as-is', without any express or implied\n"
+            "warranty.  In no event will the authors be held liable for any damages\n"
+            "arising from the use of this software.\n"
+            "\n"
+            "Permission is granted to anyone to use this software for any purpose,\n"
+            "including commercial applications, and to alter it and redistribute it\n"
+            "freely, subject to the following restrictions:\n"
+            "\n"
+            "1. The origin of this software must not be misrepresented; you must not\n"
+            "   claim that you wrote the original software. If you use this software\n"
+            "   in a product, an acknowledgment in the product documentation would be\n"
+            "   appreciated but is not required.\n"
+            "2. Altered source versions must be plainly marked as such, and must not be\n"
+            "   misrepresented as being the original software.\n"
+            "3. This notice may not be removed or altered from any source distribution.\n"
         ,
         .website = "https://github.com/ToadKing/ddb_dsp_libretro",
     },
