@@ -277,12 +277,12 @@ static DB_dsp_t plugin = {
         .api_vminor = DB_API_VERSION_MINOR,
         .version_major = 1,
         .version_minor = 0,
-        .id = "LIBRETRO",
+        .id = "src_libretro",
         .name = "Resampler (Libretro)",
         .descr =
             "Samplerate converter using the sinc resampler from Libretro/RetroArch.\n"
             "\n"
-            "Based on foobar200 modifications:\n"
+            "Based on foobar2000 modifications:\n"
             "https://www.foobar2000.org/sinc-resampler",
         .copyright =
             "Copyright (C) 2010-2018 The RetroArch team\n"

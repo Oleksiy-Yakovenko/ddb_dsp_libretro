@@ -68,7 +68,9 @@ typedef void (*resampler_sinc_process_t)(void *re_, struct resampler_data *data)
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
+#if !__APPLE__
 #include <malloc.h>
+#endif
 
 enum class sinc_window {
     NONE = 0,
@@ -352,8 +354,8 @@ static _NOALIAS void resampler_sinc_process_c(void *re_, struct resampler_data *
 
         while (resamp->time < phases) {
             unsigned i;
-            float delta;
-            float *phase_table, *delta_table;
+            float delta = 0.0;
+            float *phase_table, *delta_table = nullptr;
             const float *buffer_l = resamp->buffer_l + resamp->ptr;
             unsigned int phase = resamp->time >> resamp->subphase_bits;
 
@@ -553,7 +555,11 @@ static _NOALIAS _RESTRICT void *resampler_sinc_new(unsigned int srate_source, un
     if (re->window_type == sinc_window::KAISER) phase_elems *= 2;
     elems = phase_elems + (2*num_channels) * re->taps;
 
+#if __APPLE__
+    re->main_buffer = (float *)malloc(sizeof(float) * elems);
+#else
     re->main_buffer = (float *)aligned_alloc(128, sizeof(float) * elems);
+#endif
     if (!re->main_buffer) {
         resampler_sinc_free(re);
         return NULL;
