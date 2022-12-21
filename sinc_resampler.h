@@ -555,11 +555,9 @@ static _NOALIAS _RESTRICT void *resampler_sinc_new(unsigned int srate_source, un
     if (re->window_type == sinc_window::KAISER) phase_elems *= 2;
     elems = phase_elems + (2*num_channels) * re->taps;
 
-#if __APPLE__
-    re->main_buffer = (float *)malloc(sizeof(float) * elems);
-#else
-    re->main_buffer = (float *)aligned_alloc(128, sizeof(float) * elems);
-#endif
+    if (0 != posix_memalign((void **)&re->main_buffer, 128, sizeof(float) * elems)) {
+        re->main_buffer = nullptr;
+    }
     if (!re->main_buffer) {
         resampler_sinc_free(re);
         return NULL;
