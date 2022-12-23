@@ -10,7 +10,6 @@
 		2DC1B63126939F6100C43C4F /* ppsimd.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC1B62D26939F6100C43C4F /* ppsimd.h */; };
 		2DC1B63226939F6100C43C4F /* sinc_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC1B62E26939F6100C43C4F /* sinc_resampler.h */; };
 		2DC1B63326939F6100C43C4F /* libretro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DC1B62F26939F6100C43C4F /* libretro.cpp */; };
-		2DC1B63426939F6100C43C4F /* libretro.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DC1B63026939F6100C43C4F /* libretro.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +31,6 @@
 		2DC1B62D26939F6100C43C4F /* ppsimd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ppsimd.h; sourceTree = "<group>"; };
 		2DC1B62E26939F6100C43C4F /* sinc_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sinc_resampler.h; path = ../../sinc_resampler.h; sourceTree = "<group>"; };
 		2DC1B62F26939F6100C43C4F /* libretro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = libretro.cpp; path = ../../libretro.cpp; sourceTree = "<group>"; };
-		2DC1B63026939F6100C43C4F /* libretro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libretro.h; path = ../../libretro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				2DC1B62F26939F6100C43C4F /* libretro.cpp */,
-				2DC1B63026939F6100C43C4F /* libretro.h */,
 				2DC1B62B26939F6100C43C4F /* ppsimd */,
 				2DC1B62E26939F6100C43C4F /* sinc_resampler.h */,
 				2DC1B62526939F5100C43C4F /* Products */,
@@ -92,7 +89,6 @@
 			files = (
 				2DC1B63126939F6100C43C4F /* ppsimd.h in Headers */,
 				2DC1B63226939F6100C43C4F /* sinc_resampler.h in Headers */,
-				2DC1B63426939F6100C43C4F /* libretro.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

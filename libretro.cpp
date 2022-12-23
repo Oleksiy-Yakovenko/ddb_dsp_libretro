@@ -23,12 +23,19 @@
 #include <string.h>
 #include <assert.h>
 #include "../../deadbeef.h"
-#include "libretro.h"
 
-// #define trace(...) { fprintf(stderr, __VA_ARGS__); }
-#define trace(fmt,...)
+static DB_dsp_t *_plugin;
+
+#define trace(...) { deadbeef->log_detailed (&_plugin->plugin, 0, __VA_ARGS__); }
 
 static DB_functions_t *deadbeef;
+
+enum {
+    LIBRETRO_PARAM_SAMPLERATE = 0,
+    LIBRETRO_PARAM_QUALITY = 1,
+    LIBRETRO_PARAM_AUTOSAMPLERATE = 2,
+    LIBRETRO_PARAM_COUNT
+};
 
 #define LIBRETRO_BUFFER 16000
 #define LIBRETRO_MAX_CHANNELS 8
@@ -112,17 +119,17 @@ ddb_libretro_process (ddb_dsp_context_t *_libretro, float *samples, int nframes,
     if (libretro->need_reset || new_samplerates || libretro->channels != fmt->channels || libretro->quality_changed || !libretro->resampler) {
         libretro->quality_changed = 0;
         libretro->remaining = 0;
-        if (libretro->resampler) {
-            resampler_sinc_free (libretro->resampler);
-            libretro->resampler = NULL;
-        }
         libretro->channels = fmt->channels;
+        if (libretro->resampler) {
+            resampler_sinc_free(libretro->resampler);
+            libretro->resampler = nullptr;
+        }
         libretro->resampler = (rarch_sinc_resampler_t *)resampler_sinc_new (libretro->in_samplerate, libretro->out_samplerate, libretro->channels, libretro->quality);
 
         if (libretro->resampler == NULL) {
-            fprintf (stderr, "libretro_process failed to create resampler\n"
+            trace("libretro_process failed to create resampler\n"
                     "in_samplerate=%d, out_samplerate=%d, channels=%d, quality=%d\n", libretro->in_samplerate, libretro->out_samplerate, libretro->channels, libretro->quality);
-            return nframes;
+            return 0;
         }
 
         libretro->need_reset = 0;
@@ -170,9 +177,7 @@ ddb_libretro_process (ddb_dsp_context_t *_libretro, float *samples, int nframes,
         data.data_in = (float *)libretro->in_fbuffer;
         data.data_out = (float *)output;
         data.input_frames = libretro->remaining;
-        trace ("libretro input: %zu, buffersize: %lu\n", data.input_frames, libretro->outsize * fmt->channels * sizeof (float));
         libretro->resampler->process(libretro->resampler, &data);
-        trace ("libretro output: %zu\n", data.output_frames);
 
         inputsize -= n;
         output += data.output_frames * samplesize;
@@ -198,7 +203,6 @@ ddb_libretro_process (ddb_dsp_context_t *_libretro, float *samples, int nframes,
     //}
     //fwrite (input, 1,  numoutframes*sizeof(float)*(*nchannels), out);
 
-    trace ("libretro: in=%d, out=%d\n", nframes, numoutframes);
     return numoutframes;
 }
 
@@ -217,7 +221,7 @@ ddb_libretro_get_param_name (int p) {
     case LIBRETRO_PARAM_AUTOSAMPLERATE:
         return "Auto samplerate";
     default:
-        fprintf (stderr, "ddb_libretro_get_param_name: invalid param index (%d)\n", p);
+        trace("ddb_libretro_get_param_name: invalid param index (%d)\n", p);
     }
     return NULL;
 }
@@ -242,7 +246,7 @@ ddb_libretro_set_param (ddb_dsp_context_t *ctx, int p, const char *val) {
         ((ddb_libretro_t*)ctx)->autosamplerate = atoi (val);
         break;
     default:
-        fprintf (stderr, "ddb_libretro_set_param: invalid param index (%d)\n", p);
+        trace("ddb_libretro_set_param: invalid param index (%d)\n", p);
     }
 }
 
@@ -259,7 +263,7 @@ ddb_libretro_get_param (ddb_dsp_context_t *ctx, int p, char *val, int sz) {
         snprintf (val, sz, "%d", ((ddb_libretro_t*)ctx)->autosamplerate);
         break;
     default:
-        fprintf (stderr, "ddb_libretro_get_param: invalid param index (%d)\n", p);
+        trace("ddb_libretro_get_param: invalid param index (%d)\n", p);
     }
 }
 
@@ -278,6 +282,7 @@ static DB_dsp_t plugin = {
         .api_vminor = DB_API_VERSION_MINOR,
         .version_major = 1,
         .version_minor = 0,
+        .flags = DDB_PLUGIN_FLAG_LOGGING,
         .id = "src_libretro",
         .name = "Resampler (Libretro)",
         .descr =
@@ -368,6 +373,7 @@ extern "C" DB_plugin_t *ddb_dsp_libretro_load (DB_functions_t *f);
 DB_plugin_t *
 ddb_dsp_libretro_load (DB_functions_t *f) {
     deadbeef = f;
+    _plugin = &plugin;
     return &plugin.plugin;
 }
 
