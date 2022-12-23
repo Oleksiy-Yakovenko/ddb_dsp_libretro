@@ -514,6 +514,26 @@ static bool resampler_sinc_ratio_supported(unsigned int srate_source, unsigned i
     return false;
 }
 
+#ifdef _WIN32
+static void *resampler_buffer_alloc(size_t alignment, size_t size) {
+    return _aligned_malloc(size, alignment);
+}
+static void resampler_buffer_free(void *buffer) {
+    _aligned_free (buffer);
+}
+#else
+static void *resampler_buffer_alloc(size_t alignment, size_t size) {
+    void *ptr = nullptr;
+    if (0 != posix_memalign(&ptr, alignment, size)) {
+        return nullptr;
+    }
+    return ptr;
+}
+static void resampler_buffer_free(void *buffer) {
+    free (buffer);
+}
+#endif
+
 static _NOALIAS _RESTRICT void *resampler_sinc_new(unsigned int srate_source, unsigned int srate_target, unsigned int num_channels, enum resampler_quality quality)
 {
     ppsimd::selftest();
@@ -555,9 +575,7 @@ static _NOALIAS _RESTRICT void *resampler_sinc_new(unsigned int srate_source, un
     if (re->window_type == sinc_window::KAISER) phase_elems *= 2;
     elems = phase_elems + (2*num_channels) * re->taps;
 
-    if (0 != posix_memalign((void **)&re->main_buffer, 128, sizeof(float) * elems)) {
-        re->main_buffer = nullptr;
-    }
+    re->main_buffer = (float *)resampler_buffer_alloc(128, sizeof(float) * elems);
     if (!re->main_buffer) {
         resampler_sinc_free(re);
         return NULL;
@@ -600,6 +618,6 @@ static _NOALIAS void resampler_sinc_flush(void *data)
 static _NOALIAS void resampler_sinc_free(void *data)
 {
     rarch_sinc_resampler_t *resamp = (rarch_sinc_resampler_t*)data;
-    if (resamp) free(resamp->main_buffer);
+    if (resamp) resampler_buffer_free((void *)resamp->main_buffer);
     free(resamp);
 }
