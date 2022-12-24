@@ -191,7 +191,7 @@ ddb_libretro_process (ddb_dsp_context_t *_libretro, float *samples, int nframes,
             memmove (libretro->in_fbuffer, &libretro->in_fbuffer[data.input_frames*samplesize], libretro->remaining * samplesize);
         }
         if (data.output_frames == 0) {
-            trace ("src: output_frames_gen=0, interrupt\n");
+            trace ("dsp_libretro: output_frames_gen=0, interrupt\n");
             break;
         }
     } while (inputsize > 0 && outsize > 0);
@@ -283,7 +283,7 @@ static DB_dsp_t plugin = {
         .version_major = 1,
         .version_minor = 0,
         .flags = DDB_PLUGIN_FLAG_LOGGING,
-        .id = "src_libretro",
+        .id = "resampler_libretro",
         .name = "Resampler (Libretro)",
         .descr =
             "Samplerate converter using the sinc resampler from Libretro/RetroArch.\n"
