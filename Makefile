@@ -3,7 +3,7 @@ CXXFLAGS?=$(CFLAGS) -msse3 -DNDEBUG
 OUT=ddb_dsp_libretro
 
 all:
-	$(CXX) $(CXXFLAGS) -shared -O2 -o $(OUT).so libretro.c -fPIC -Wall -march=native
+	$(CXX) $(CXXFLAGS) -shared -O2 -o $(OUT).so libretro.cpp -fPIC -Wall -march=native
 debug: CXXFLAGS += -g
 debug: all
 
