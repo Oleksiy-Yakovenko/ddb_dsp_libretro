@@ -37,6 +37,8 @@
 #define _RESTRICT
 #endif
 
+#include <cstdint>
+
 /* API definitions */
 
 enum resampler_quality {            /* Rough SNR values for upsampling: */
@@ -51,8 +53,8 @@ struct resampler_data {
     const float *data_in;
     float *data_out;
 
-    size_t input_frames;
-    size_t output_frames;
+    std::size_t input_frames;
+    std::size_t output_frames;
 };
 
 static bool resampler_sinc_ratio_supported(unsigned int srate_source, unsigned int srate_target, enum resampler_quality quality);
@@ -65,7 +67,6 @@ static void resampler_sinc_free(void *data);
 
 typedef void (*resampler_sinc_process_t)(void *re_, struct resampler_data *data);
 
-#include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
 #include <malloc.h>
