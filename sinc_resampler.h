@@ -24,6 +24,12 @@
 #define __forceinline
 
 #include "ppsimd/ppsimd.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+#if !__APPLE__
+#include <malloc.h>
+#endif
 
 #ifdef _MSC_VER
 #define _NOALIAS __declspec(noalias)
@@ -64,13 +70,6 @@ static void resampler_sinc_free(void *data);
 /* end of API definitions */
 
 typedef void (*resampler_sinc_process_t)(void *re_, struct resampler_data *data);
-
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
-#if !__APPLE__
-#include <malloc.h>
-#endif
 
 enum class sinc_window {
     NONE = 0,
