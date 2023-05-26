@@ -19,6 +19,8 @@
  /* Modified by Janne Hyvärinen */
  /* Modified some more by Peter Pawlowski */
 
+#include <stddef.h> 
+
 #pragma once
 
 #define __forceinline
